@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>IBDP EE</title>
+        <link rel="stylesheet" href="styles.css">
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </head>
+
+    <body>
+
+        <a href="/home_en.html">Back</a>
+
+        <h2>The reflectivity of light on materials</h2>
+        <p>
+            This project was carried out in the framework of the Extended Essay (EE), which is a part of the International Baccalaurate Diploma Programme (IBDP). Students need to propose a research topic in any subject, carry out the research, and write an essay about their findings. Due to my interest in 3D rendering, I have chosen to investigate the physics behind the reflection of light on materials, and more specifically, the complex refractive index and the Fresnel equations.
+        </p>
+
+        <h3>Why a complex refractive index?</h3>
+        <p>
+            The refractive index is an optical quantity which is often linked to the bending of light when travelling between two different media, a well-known phenomenon called refraction. However, it is also a much more general description of the medium itself, and is an equivalent of the relative electric permittivity (dielectric constant) and relative magnetic permeability, since, in fact:
+            \[n=\sqrt{\varepsilon_r\mu_r}\]
+            The use of the refractive index at optical frequencies, as compared to the use of the dielectric constant at radio frequencies, stems from the completely different historical routes of discoveries and experiments on either side of the terahertz gap. In essence, however, the two concepts are equivalent.
+        </p>
+
+        <p>
+            For conductive media, a conductivity term in the Maxwell equations naturally leads to an effective, complex dielectric constant, and, as a result, the refractive index becomes a complex quantity as well. The complex part is often known as the extinction coefficient, and describes the expoential decay in the amplitude of the travelling wave with the distance travelled.
+        </p>
+
+        <h3>The Fresnel equations</h3>
+        <p>
+            The Fresnel equations describe the variation of reflection depending on the angle of incidence. There are two equations, one for s-polarised or transverse electric (TE) waves, and one for p-polarised or transverse magnetic (TM) waves. The amplitude reflection cofficients are:
+            \[r_s = \frac{n_i\cos\theta-n_t\sqrt{1-\big(\frac{n_i}{n_t}\sin\theta\big)^2}}{n_i\cos\theta+n_t\sqrt{1-\big(\frac{n_i}{n_t}\sin\theta\big)^2}}\]
+            \[r_p = \frac{n_i\sqrt{1-\big(\frac{n_i}{n_t}\sin\theta\big)^2}-n_t\cos\theta}{n_i\sqrt{1-\big(\frac{n_i}{n_t}\sin\theta\big)^2}+n_t\cos\theta}\]
+            Here, \(n_i\) is the refractive index of the first medium, \(n_t\) is the refractive index of the second medium, and \(\theta\) is the angle of incidence. Since the refractive index is now complex, the amplitude reflection coefficients are, in general, complex numbers as well. The power reflection coefficients are simply the square modulus of the above, and hence are real numbers.
+        </p>
+
+        <h3>The experiment</h3>
+        <p>
+            The school laboratory had lasers and light detectors, but unfortunately there was no optical bench or similar apparatus to place them on. Hence, I needed to assemble my own, using spare parts and a digital protractor to measure the angles. The result is shown below:
+        </p>
+
+        <img src="/projects/apparatus.jpeg" alt="Acrylic glass" style="width:600px;">
+
+        <p>
+            The materials samples of choice are an acrylic glass prism from the school laboratory, a monocrystalline silicon wafer from online, and a stainless steel toilet paper holder (a spare one, I did not take down the one in the bathroom):
+        </p>
+
+        <img src="/projects/glass_sample.jpeg" alt="Glass sample" style="width:300px;">
+        <img src="/projects/silicon_sample.jpeg" alt="Silicon sample" style="width:300px;">
+        <img src="/projects/steel_sample.jpeg" alt="Steel sample" style="width:300px;">
+
+        <p>
+            By selecting these three materials (dielectric, semiconductor, metal), I was hoping to obtain a reasonable range of extinction coefficients, which, in the end, I did. The experiment steps simply involved rotating the apparatus to obtain different angles of incidence and recording the power reading. The experiment was done for both s-polarisation and p-polarisation.
+        </p>
+
+        <h3>The results</h3>
+        <p>
+            The power-reflectivity against angle-of-incidence curves were plotted, and a least-squares non-linear curve fit to the Fresnel equations with the complex refractive index as the parameter was performed. The results obtained are shown in the graphs below:
+        </p>
+
+        <img src="/projects/acrylic_glass.svg" alt="Acrylic glass" style="width:400px;">
+        <img src="/projects/monocrystalline_silicon.svg" alt="Monocrystalline silicon" style="width:400px;">
+        <img src="/projects/stainless_steel.svg" alt="Stainless steel" style="width:400px;">
+
+        <p>
+            For such an ad hoc experiment, the results are surprisingly good. The refractive indices obtained are reasonably close to the ones quoted in the literature. I thought there was a large discrepancy for the extinction coefficient of silicon since it is higher than the values quoted, but I soon realised that the literature I was referring to measured instrinsic silicon whereas my silicon wafer was most likely doped. It was interesting to see this fact reflect in the measurement results.
+        </p>
+
+        <h3>Final comments</h3>
+        <p>
+            This project can be considered as a first for me in many aspects: first research project, first proper report, first time using MATLAB, first time learning Maxwell equations... It was overall a very rewarding experience, and much of the knowledge I have acquired in this project, either theoretical or practical, are still of great benefit for me to this date.
+        </p>
+
+    </body>
+
+</html>

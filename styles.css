@@ -1,0 +1,19 @@
+* {
+    background-color: aliceblue;
+}
+
+h1 {
+    text-align: center;
+    border-style: double;
+    background-color: white;
+}
+
+h2 {
+    text-align: center;
+    border-style: outset;
+    background-color: white;
+}
+
+h3 {
+    background-color:lightskyblue;
+}

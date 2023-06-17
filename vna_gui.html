@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>VNA GUI</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+
+    <body>
+
+        <a href="/home_en.html">Back</a>
+        
+        <h2>VNA GUI</h2>
+        <p>
+            This project took place during the summer of 2023, after the end of my second year in university. One of the second year modules was Electromagnetism, and the hardware lab involved measurements of scattering (S) parameters on simple radio-frequency (RF) circuits, with a handheld PC-based vector network analyser (VNA). The aim of this project was to create a user calibration process for the VNA that is both robust and student-friendly.
+        </p>
+
+        <h3>Why user calibration?</h3>
+        <p>
+            The VNA is a test and measurement instrument of utmost importance in RF electronics. It measures the network parameters of electrical networks, most often S-parameters, although other parameters (Z, Y, ABCD, H...) can be derived from them.
+        </p>
+        <p>
+            The internal architecture of a VNA is very complex, and the measurements it gives is dependent on the external connections as well as environmental factors such as temperature. Hence, unlike some other instruments, a factory calibration is not sufficient to obtain accurate measurements, and the user needs to calibrate the instrument before each use.
+        </p>
+
+        <h3>The 12-term error model</h3>
+        <p>
+            Because of the complex archtecture, creating a circuit-based error model for the VNA would be a difficult and impractical task, if at all possible. Hence, a 12-term error model based on S-parameters is used instead. The 12-term error model is shown below (image from Keysight):
+        </p>
+
+        <img src="/projects/error_model.png" alt="Error model" style="width:600px;">
+
+        <p>This image also shows the equations to obtain the actual S-parameters of the device under test (DUT) from the raw S-parameters measured at the VNA. It is interesting to note that, to measure a single S-parameter correctly, all four raw S-parameters need to be measured.</p>
+
+        <h3>SOLT acquisition</h3>
+
+        <p>
+            The 12-term error models requires the S-parameters of all 12 error terms. These error terms are typically acquired by the use of known standards. A common set of standards is the short-open-load-thru (SOLT) standards, which, as the name suggests, contains a short-circuit termination, an open-circuit termination, a load termination and a through connection.
+        </p>
+
+        <p>
+            Short and load termination are provided in the hardware lab. The open circuit can be achieved by leaving the port open, and the through connection can be done with a cable.
+        </p>
+
+        <h3>Challenges</h3>
+
+        <p>
+            The main challenge I encountered is the fact that this two-port VNA is not a full two-port VNA, that is, only one of the ports can actually send signals. Hence, a simultaneous measurement of all four S-parameters is not possible. But since, as shown in the image above, the 12-terms error model can be split into two 6-term error models, it would be possible and theoretically justified to do each measurement in two steps, flipping the ports on the DUT on the second measurement and using the same 6 error terms. However, this was considered impractical.
+        </p>
+
+        <p>
+            After extensive measurements, I noticed that, in general, assuming symmetry (S11 = S22) and reciprocity (S21 = S12) to apply the full two-port correction gives more accurate measurements than applying a one-port correction. Since most of the RF circuits in this hardware lab are symmetric and reciprocal anyways, this assumption was applied in the code at the end.
+        </p>
+
+        <p>
+            Another challenge I encountered was when implementing calibration at an arbitrary measurement plane of reference. For example, if a cable was to be included behind the plane, this would require connection an SMA male short termination on a SMA male cable connector. This would involve an extra female-to-female SMA connector, whose electrical length I thought was negligible at 3GHz, but actually was not.
+        </p>
+
+        <p>
+            After I found this issue, I have solved it by simply estimating the electrical length of the SMA connector and adding it as a correction factor inside the code. I had already used, in the code, the equations able to handle non-ideal standards, which made this addition trivial.
+        </p>
+
+        <h3>The GUI</h3>
+
+        <p>
+            The previous calibration process was command-line based, and I initially had no intention of making a graphical user interface (GUI). However, as the number of options implemented increased (frequency range, number of points, gender of connector at the plane of reference, thru standard used...), I have found the need for a GUI.
+        </p>
+
+        <p>
+            The first GUI implemented was mainly for debugging purposes. It had all of the options available, but was not particularly user friendly. After discussion with the module lecturer, it was decided that the GUI would highlight the calibration steps for each specific task, hence hiding some of the options that would otherwise need to be selected by the user depending on the task.
+        </p>
+
+        <p>
+            As an additional touch, I have made 3D models of the hardware and included animations in the GUI as visual instructions for the students. Below is the calibration sequence (open, short, load, thru) for a splitter measurement task.
+        </p>
+
+        <img src="/projects/Task5Open.gif" alt="Open" style="width:300px;">
+        <img src="/projects/Task5Short.gif" alt="Short" style="width:300px;">
+        <img src="/projects/Task5Load.gif" alt="Load" style="width:300px;">
+        <img src="/projects/Task5Thru.gif" alt="Thru" style="width:300px;">
+
+        <h3>Final comments</h3>
+
+        <p>
+            This project could be considered as my first step into the field of instrumentation. Reading through a few chapters of the "Handbook of microwave component measurements with advanced VNA techniques" by Joel P. Dunsmore, the main resource used during this project, gave me a great insight into the complexity of high-frequency test and measurement systems. This project both further developed my interest in RF electronics, and also provided me with an opportunity to review 3D modelling, which I had unfortunately no time to allocate to during term time.
+        </p>
+
+    </body>
+
+</html>

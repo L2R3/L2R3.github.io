@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>CharIOT-Key-C</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+
+    <body>
+
+        <a href="/home_en.html">Back</a>
+        
+        <h2>CharIOT-Key-C</h2>
+        <p>
+            This project was the second coursework of the Embedded Systems module at university. The aim of the coursework is to implement a digital music synthesiser on the hardware provided, which were boards with one octave of keys, four knobs, one joystick, a speaker, a display, and a headphone socket. There are also connectors for stacking multiple keyboards together to create a larger synthesiser with more octaves: these connectors are made for use with the controlled-area-network (CAN).
+        </p>
+
+        <p>
+            The project was carried out in a group of four members. The name CharIOT was due to the first coursework being an IOT device. As a group, we decided to keep the name although the synthesiser is not an IOT device...
+        </p>
+
+        <img src="/projects/synth.png" alt="Music synthesiser" style="width:600px;">
+
+        <h3>STM32Cube</h3>
+        <p>
+            The microcontroller provided is the STM32L432KC. The project was advised to be done in C++ using STM32duino, an Arduino-like framework on PlatformIO, because this would make the implementation of basic functionalities easier. However, this would also make the access to the full capability of the integrated hardware more difficult. Hence, we decided to take advantage of STM32's own tools. C was also chosen instead of C++ to make things even simpler.
+        </p>
+        <p>
+            STM32Cube contains an integrated development environment, STM32CubeIDE, as well as a configuration tool known as STM32CubeMX, which can generate the code necessary to initialise the hardware. The hardware abstraction layer (HAL) was used to interface with the hardware. Being able to use the HAL directly instead of the further abstraction layers in the STM32duino was very helpful in optimising the use of hardware, such as setting up different hardware timers for different functionalities and accessing the full 12-bit resolution of the integrated digital-to-analogue converter (DAC) for audio signal output.
+        </p>
+        <p>
+            As a result of the above choices, many of the provided scripts, which were written in C++ using the STM32duino framework, needed to be transferred to C and and use the HAL instead. Significant debugging was required to make the display functional. Translating the provided C++ CAN scripts into C was an interesting process as well, as it allowed me to clearly compare the differences between C and C++, especially relating to pointers and references.
+        </p>
+        
+        <h3>44.1kHz polyphony implementation</h3>
+        <p>
+            Most of the focus was directed towards the implementation of an computationally efficient audio generation method. Embedded systems are notable for their constrained resources and real-time requirements. The project specifications allowed a 22kHz sampling frequency, but we thought it would be a good challenge to try to run the synthesisers at the standard audio 44.1kHz sampling frequency. This implies even stricter conditions on the timing aspects.
+        </p>
+        <p>
+            Multiple solutions of efficient sound synthesis were attempted, but the timing constraints could not be met for most of them. The main challenge was the addition of notes for polyphony. Indeed, addition of pure tones whose frequencies are not integer multiples of each other results in quasi-periodic waves, which, for an authentic audio experience, cannot be stored in a look-up table and must be calculated in real-time.
+        </p>
+
+        <p>
+            In the end, I have thought to implement an architecture similar to that of the direct digital synthesis (DDS) chip used in another project (<a href="ohm_my_god.html">OHM-MY-GOD</a>) that was happening in parallel. The architecture consists of using a high-resolution phase accumulator for each of the 12 notes in an octave. A different step size is required for each of the 12 frenquencies, and the phase value would then be bit-shifted down by a number of bits which depends on the octave of the note. I have also thought of "rotating" the 16-bit array, where each element is from a different keyboard/octave and contains information about which of the 12 notes are pressed, into a 8-bit array, where each element is from a different note, and represents which keyboard/octave they were in. This prevents the indiscriminate addition of steps in the phase accumulator even if the note is not pressed in any of the octaves.
+        </p>
+
+        <p>
+            The final result is an audio generation algorithm which only includes addition, subtraction, shifting and AND operations, and does not include any multiplication, division, or modulo operations.
+        </p>
+
+        <h3>Final comments</h3>
+        <p>
+            From a programming perspective, this project was for me the most rewarding project so far. I very much enjoyed the challenge of resource-limited functionality implementation, as well as the process of attempting different optimisation methods for audio generation. Throughout the Embedded Systems module in general, I have also obtained valuable help and support from my team members who are more well-versed in progamming than I am.
+        </p>
+
+    </body>
+
+</html>
