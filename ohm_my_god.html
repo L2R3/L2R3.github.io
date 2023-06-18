@@ -14,7 +14,7 @@
         
         <h2>OHM-MY-GOD</h2>
         <p>
-            This project was the coursework of the Instrumentation module at university. The aim of the coursework is to implement a complex impedance meter on printed circuit board (PCB). The project was carried out in a group of two members.
+            This project was the coursework of the Instrumentation module. The aim of the coursework is to implement a complex impedance meter on printed circuit board (PCB). The project was carried out in a group of 2 members.
         </p>
 
         <h3>Complex impedance meter</h3>
@@ -39,19 +39,27 @@
             Signal generation is done by means of a dedicated direct digital synthesis (DDS) chip. A variable DC bias is also introduced at the input. This would provide a way to measure the variation of components parameters under a DC voltage, such as the capacitance in the case of multi-layer ceramic capacitors (MLCCs).
         </p>
 
+        <p>
+            Since a large range of measurable impedances is desired, switching the gains of the amplifiers is unavoidable. To minimise the unwanted effects of switching, such as switching transients and voltage drops, the switches were either placed on a low current path or arranged in a matrix, together with a parallel capacitor, as shown in the schematics below:
+        </p>
+
+        <img src="projects/TIAgain.svg" alt="gain switch 1" style="height: 300px;">
+        <img src="projects/INAgain2.svg" alt="gain switch 1" style="height: 300px;">
+
         <h3>The PCB</h3>
 
         <p>
             Both the schematic design and board layouts were done using KiCad. The second revision PCB layout is shown below:
         </p>
 
-        <img src="projects/PCB_layout.png" alt="PCB layout" style="height: 500px;">
+        <img src="projects/PCB_layout.png" alt="PCB layout top" style="width: 500px;">
+        <img src="projects/PCB_layout_bottom.png" alt="PCB layout bottom" style="width: 500px;">
 
         <p>
             However, due to time limitations, most of the testing was completed on revision 1, which had, just like most first revision PCBs, a number of errors.
         </p>
 
-        <img src="projects/PCB_photo.jpeg" alt="PCB layout" style="height: 500px;">
+        <img src="projects/PCB_photo.jpeg" alt="PCB layout" style="width: 700px;">
 
         <h3>The firmware and the software</h3>
 
@@ -65,7 +73,7 @@
             The complex impedance meter PCB was tested against a range of DUTs and gave good results in most cases. Perhaps the most interesting results was the measurement of a series RLC:
         </p>
 
-        <img src="projects/pcb_rlc.jpeg" alt="PCB RLC" style="height: 500px;">
+        <img src="projects/pcb_rlc.jpeg" alt="PCB RLC" style="width: 500px;">
 
         <p>
             The measurement results showed an inductor self resonant frequency in the range of 200kHz-300kHz. This was confirmed by a measurement of the same DUT with a laboratory impedance meter.
